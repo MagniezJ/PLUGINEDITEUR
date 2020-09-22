@@ -57,7 +57,8 @@ add_shortcode('usp-reset-button', 'usp_reset_button_shortcode');
 		
 		https://plugin-planet.com/usp-pro-display-list-submitted-posts/
 	
-*/function usp_display_posts($attr, $content = null) {
+*/
+function usp_display_posts($attr, $content = null) {
 	
 	global $post;
 	
@@ -70,8 +71,10 @@ add_shortcode('usp-reset-button', 'usp_reset_button_shortcode');
 	
 	if (ctype_digit($userid)) {
 		
+			
 		$args = array(
 			'author'         => $userid,
+			'post_type' => 'post',
 			'posts_per_page' => $numposts,
 			'meta_key'       => 'is_submission',
 			'meta_value'     => '1'
@@ -81,6 +84,7 @@ add_shortcode('usp-reset-button', 'usp_reset_button_shortcode');
 		
 		$args = array(
 			'posts_per_page' => $numposts,
+			'post_type' => 'post',
 			'meta_key'       => 'is_submission',
 			'meta_value'     => '1'
 		);
@@ -90,6 +94,7 @@ add_shortcode('usp-reset-button', 'usp_reset_button_shortcode');
 		$args = array(
 			'author'         => get_current_user_id(),
 			'posts_per_page' => $numposts,
+			'post_type' => 'post',
 			'meta_key'       => 'is_submission',
 			'meta_value'     => '1'
 		);
@@ -98,7 +103,7 @@ add_shortcode('usp-reset-button', 'usp_reset_button_shortcode');
 		
 		$args = array(
 			'posts_per_page' => $numposts,
-			
+			'post_type' => 'post',
 			'meta_query' => array(
 				
 				'relation' => 'AND',
@@ -115,24 +120,21 @@ add_shortcode('usp-reset-button', 'usp_reset_button_shortcode');
 		);
 		
 	}
-	
-	$submitted_posts = get_posts($args);
+	global $wp_query();
+
+$sky_post = $wp_query->post;
+	$submitted_posts = get_posts($sky_post);
+
 	
 	$display_posts = '<ul>';
 	
 	foreach ($submitted_posts as $post) {
 		
 		setup_postdata($post);
-		$posttags = get_the_tags();
 		
-		$display_posts .= '<li><a href="'. get_the_permalink() 
-		.'" title="'. esc_attr__('View full post', 'usp') .'">'.
-		get_the_title() .'</a>
-		<p>'.get_the_author().' '.get_the_date(). ' '.'</p></li>'; 
-	/* 	if ($posttags) {
-			foreach($posttags as $tag) {
-			  echo $tag->name . ' '; 
-			}}; */
+		$display_posts .= '<li><p " title="'. esc_attr__('View full post', 'usp') .'">'. get_the_title(). '  ' .get_the_author().'  ' .get_the_category(). '  '. get_the_date().'  '. comments_number() .'</p></li>';
+		
+	}
 	
 	$display_posts .= '</ul>';
 	
@@ -142,8 +144,6 @@ add_shortcode('usp-reset-button', 'usp_reset_button_shortcode');
 	
 }
 add_shortcode('usp_display_posts', 'usp_display_posts');
-
-
 
 
 
