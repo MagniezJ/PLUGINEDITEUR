@@ -27,9 +27,9 @@ else :
 		
 		if (($usp_options['usp_name'] == 'show' || $usp_options['usp_name'] == 'optn') && ($usp_display_name)) { ?>
 		
-		<fieldset class="usp-name">
-			<label for="user-submitted-name"><?php esc_html_e('Your Name', 'usp'); ?></label>
-			<input id="user-submitted-name" name="user-submitted-name" type="text" value="" placeholder="<?php esc_attr_e('Your Name', 'usp'); ?>"<?php if (usp_check_required('usp_name')) echo $usp_required; ?> class="usp-input">
+		<fieldset class="usp-name" >
+			<label for="user-submitted-name" style="display:none;"><?php esc_html_e('Your Name', 'usp'); ?></label>
+			<input id="user-submitted-name" name="user-submitted-name" type="text" value="" style="width:30%; position:absolute; top:20%;left:20%;" placeholder="<?php esc_attr_e('Your Name', 'usp'); ?>"<?php if (usp_check_required('usp_name')) echo $usp_required; ?> class="usp-input">
 		</fieldset>
 		<?php } if (($usp_options['usp_email'] == 'show' || $usp_options['usp_email'] == 'optn') && ($usp_display_email)) { ?>
 		
@@ -45,9 +45,9 @@ else :
 		</fieldset>
 		<?php } if ($usp_options['usp_title'] == 'show' || $usp_options['usp_title'] == 'optn') { ?>
 		
-		<fieldset class="usp-title" >
-			<label for="user-submitted-title" style="font-size:36px; margin-top: -5%; margin-bottom:5%; margin-left:30%;"><?php esc_html_e('Ajouter un article', 'usp'); ?></label>
-			<input id="user-submitted-title" name="user-submitted-title" type="text" value="" style="width: 70%; margin-left:20%" placeholder="<?php esc_attr_e('Post Title', 'usp'); ?>"<?php if (usp_check_required('usp_title')) echo $usp_required; ?> class="usp-input">
+		<fieldset class="usp-title" style="margin-left:10%; width: 50%"  >
+			<label for="user-submitted-title" style="font-size:36px; margin-top: 2%; margin-bottom:5%; margin-left:10%;"><?php esc_html_e('Ajouter un article', 'usp'); ?></label>
+			<input id="user-submitted-title" name="user-submitted-title" type="text" value="" style="width: 70%; margin-left:15%" placeholder="<?php esc_attr_e('Post Title', 'usp'); ?>"<?php if (usp_check_required('usp_title')) echo $usp_required; ?> class="usp-input">
 		</fieldset>
 		<?php } if ($usp_options['usp_tags'] == 'show' || $usp_options['usp_tags'] == 'optn') { ?>
 		
@@ -65,26 +65,24 @@ else :
 		</fieldset>
 		<?php } if (($usp_options['usp_category'] == 'show' || $usp_options['usp_category'] == 'optn') && ($usp_options['usp_use_cat'] == false)) { ?>
 		
-		<fieldset class="usp-category" >
-			<select id="user-submitted-category" style="left:80%; top:100%; width: 8%; position:absolute;" <?php if (usp_check_required('usp_category')) echo $usp_required; echo $multiple_cats . $category_class; ?> name="user-submitted-category[]">
-				<option value="" style="width: 30%;"><?php esc_html_e('catégorie', 'usp'); ?></option>
-				<?php echo usp_get_cat_options(); ?>
-			</select>
-		</fieldset>
+		
 		<?php } if ($usp_options['usp_content'] == 'show' || $usp_options['usp_content'] == 'optn') { ?>
 		
+		<fieldset class="usp-content" style="width:75%; margin-left:15%">
+			<?php } if ($usp_options['usp_content'] == 'show' || $usp_options['usp_content'] == 'optn') { ?>
+		
 		<fieldset class="usp-content">
-			<?php if ($usp_options['usp_visual_editor'] == true) { ?>
+			<?php if ($usp_options['usp_richtext_editor'] == true) { ?>
 			
 			<div class="usp_text-editor">
 			<?php $usp_rte_settings = array(
 				    'wpautop'          => true,  // enable rich text editor
 				    'media_buttons'    => true,  // enable add media button
 				    'textarea_name'    => 'user-submitted-content', // name
-				    'textarea_rows'    => '20',  // number of textarea rows
+				    'textarea_rows'    => '10',  // number of textarea rows
 				    'tabindex'         => '',    // tabindex
 				    'editor_css'       => '',    // extra CSS
-				    'editor_class'     => 'usp-visual-editor', // class
+				    'editor_class'     => 'usp-rich-textarea', // class
 				    'teeny'            => false, // output minimal editor config
 				    'dfw'              => false, // replace fullscreen with DFW
 				    'tinymce'          => true,  // enable TinyMCE
@@ -98,16 +96,23 @@ else :
 			</div>
 			<?php } else { ?>
 			
-			<textarea style="height:20%; margin-top:8%;" id="user-submitted-content" name="user-submitted-content" 
+			<textarea style="height:20%; margin-top:8%; width:50%" id="user-submitted-content" name="user-submitted-content" 
 			rows="20" placeholder="<?php esc_attr_e('Post Content', 'usp'); ?>"
 			<?php if (usp_check_required('usp_content')) echo $usp_required; ?> class="usp-textarea"></textarea>
 			<?php } ?>
+			<fieldset class="usp-category">
+			<label for="user-submitted-category" style="display:none;"><?php esc_html_e('Post Category', 'usp'); ?></label>
+			<select id="user-submitted-category" style="width:18% ; position:absolute; top:35%; left:60%;"<?php if (usp_check_required('usp_category')) echo $usp_required; echo $multiple_cats . $category_class; ?> name="user-submitted-category[]">
+				<option value=""><?php esc_html_e('Please select a category..', 'usp'); ?></option>
+				<?php echo usp_get_cat_options(); ?>
+			</select>
+		</fieldset>
 			<?php if ($usp_existing_tags) { ?>
 		
-		<fieldset class="usp-tags">
+		<fieldset class="usp-tags" style="width:18% ; position:absolute; top:60%; left:60%;">
 		<select id="user-submitted-tags" name="user-submitted-tags[]"
 		<?php if (usp_check_required('usp_tags')) echo $usp_required; ?> 
-		class="usp-select usp-multiple" multiple="multiple" style="width:20%;">
+		class="usp-select usp-multiple" multiple="multiple" style="width:20%; position:absolute; top:50%; left:63%;">
 			<option value=""><?php esc_attr_e('étiquettes', 'usp'); ?></option>
 			<?php echo usp_get_tag_options(); ?>
 		</select>
@@ -115,7 +120,7 @@ else :
 	<?php } else { ?>
 	
 	<fieldset class="usp-tags">
-		<input id="user-submitted-tags" name="user-submitted-tags" type="text" value="" style="width:15%; position:absolute; left:80%; top:120%;"
+		<input id="user-submitted-tags" name="user-submitted-tags" type="text" value="" style="width:15%; position:absolute; left:63%; top:52%;"
 		 placeholder="<?php esc_attr_e('étiquettes', 'usp'); ?>"<?php if (usp_check_required('usp_tags')) echo $usp_required; ?> class="usp-input">
 	</fieldset>
 	<?php } ?>
@@ -167,7 +172,7 @@ else :
 		
 		<?php echo usp_display_custom_checkbox(); ?>
 		
-		<div id="usp-submit" style="position:absolute; top:140%; left:80%;">
+		<div id="usp-submit" style="position:absolute; top:70%; left:63%;">
 			<?php if (isset($usp_options['redirect-url']) && !empty($usp_options['redirect-url'])) { ?>
 			
 			<input type="hidden" class="usp-hidden" name="redirect-override" value="<?php echo esc_url($usp_options['redirect-url']); ?>">

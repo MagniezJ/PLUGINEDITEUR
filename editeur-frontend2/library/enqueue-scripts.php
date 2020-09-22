@@ -34,7 +34,7 @@ function usp_enqueueResources() {
 	
 	$display_js  = false;
 	$display_css = false;
-	
+	wp_enqueue_script('delete', $plugin_url .'/resources/delete.js', array(), 1,'all');
 	if (!empty($display_url)) {
 		
 		$display_urls = explode(',', $display_url);
@@ -242,3 +242,4 @@ function usp_load_admin_styles($hook) {
 	
 }
 add_action('admin_enqueue_scripts', 'usp_load_admin_styles');
+

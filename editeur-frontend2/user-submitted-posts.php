@@ -37,6 +37,7 @@ require_once('library/template-tags.php');
 
 
 
+
 function usp_i18n_init() {
 	
 	load_plugin_textdomain('usp', false, dirname(plugin_basename(__FILE__)) .'/languages/');
