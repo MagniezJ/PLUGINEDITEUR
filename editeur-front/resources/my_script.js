@@ -5,9 +5,9 @@ jQuery( document ).ready( function($) {
         var post = $(this).parents('.post:first');
         $.ajax({
             type: 'post',
-            url: MyAjax.ajaxurl,
+            url: TheAjax.ajaxurl,
             data: {
-                action: 'my_delete_post',
+                action: 'wpse_ajax_delete_post',
                 nonce: nonce,
                 id: id
             },

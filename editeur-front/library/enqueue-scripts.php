@@ -35,6 +35,10 @@ function usp_enqueueResources() {
 	$display_js  = false;
 	$display_css = false;
 	wp_enqueue_script('delete', $plugin_url .'/resources/delete.js', array(), 1,'all');
+	wp_enqueue_script('front-end', $plugin_url .'/resources/front-end.js', array(), 1,'all');
+	wp_localize_script('delete', 'myScript', array(
+		'script_directory' => $plugin_url 
+	));
 	if (!empty($display_url)) {
 		
 		$display_urls = explode(',', $display_url);
@@ -87,13 +91,7 @@ function usp_enqueueResources() {
 			
 		}
 		
-		array_push($deps, 'jquery', 'usp_cookie', 'usp_parsley');
 		
-		$deps = array_unique($deps);
-		
-		wp_enqueue_script('usp_cookie',  $plugin_url .'/resources/jquery.cookie.js',      array('jquery'), USP_VERSION);
-		wp_enqueue_script('usp_parsley', $plugin_url .'/resources/jquery.parsley.min.js', array('jquery'), USP_VERSION);
-		wp_enqueue_script('usp_core',    $plugin_url .'/resources/jquery.usp.core.js',    $deps,           USP_VERSION);
 		
 		usp_inline_script();
 		

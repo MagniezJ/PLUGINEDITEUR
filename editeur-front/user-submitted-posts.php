@@ -1,16 +1,10 @@
 <?php 
 /*
-	Plugin Name: Editeur Front End
+	Plugin Name: Editeur_Articles
 	Plugin URI: 
 	Description:Editeur front end personnalisé
 	Tags: post
-	Author: Magniez Justine(clone)
-	Requires at least: 4.1
-	Tested up to: 5.5
-	Version: 20200911
-	Requires PHP: 5.6.20
-	Domain Path: /languages
-	License: GPL v2 or later
+	Author: Magniez Justine
 */
 
 
@@ -110,7 +104,13 @@ function usp_check_required($field) {
 	
 }
 
-
+add_action( 'parse_request', 'wpse132196_redirect_after_trashing_get' );
+function wpse132196_redirect_after_trashing_get() {
+    if ( array_key_exists( 'trashed', $_GET ) && $_GET['trashed'] == '1' ) {
+        wp_redirect( home_url('/liste-articles') );
+        exit;
+    }
+}
 
 function usp_get_default_title() {
 	
@@ -1167,7 +1167,24 @@ function usp_createPublicSubmission($title, $files, $ip, $author, $url, $email, 
 			
 			update_post_meta($post_id, 'is_submission', true);
 			update_post_meta($post_id, 'usp-post-id', $post_id);
-
+	if (!function_exists('wp_generate_attachment_metadata')){
+						require_once(ABSPATH . "wp-admin" . '/includes/image.php');
+						require_once(ABSPATH . "wp-admin" . '/includes/file.php');
+						require_once(ABSPATH . "wp-admin" . '/includes/media.php');
+					}
+					if ($_FILES) {
+						foreach ($_FILES as $file => $array) {
+							if ($_FILES[$file]['error'] !== UPLOAD_ERR_OK) {
+								return "upload error : " . $_FILES[$file]['error'];
+							}
+							$attach_id = media_handle_upload( $file, $post_id );
+						}   
+					}
+					if ($attach_id > 0){
+						//and if you want to set that image as Post  then use:
+						update_post_meta($post_id,'_thumbnail_id',$attach_id);
+					}
+			
 			$custom_name   = isset($usp_options['custom_name'])          ? $usp_options['custom_name']          : 'usp_custom_field';
 			$checkbox_name = isset($usp_options['custom_checkbox_name']) ? $usp_options['custom_checkbox_name'] : 'usp_custom_checkbox';
 			
@@ -1189,10 +1206,35 @@ function usp_createPublicSubmission($title, $files, $ip, $author, $url, $email, 
 		
 	}
 	
-	return apply_filters('usp_new_post', $newPost);
 	
+
+	return apply_filters('usp_new_post', $newPost);
+
 }
 
+
+function modif() {
+	global $current_post;
+	
+if(isset($_POST['modif'])){	
+	// create post object
+	$my_post = [
+			'ID' => $current_post,
+			'post_type' => 'post',
+			'post_title' => $_POST['user-submitted-title'],
+			'post_category' =>  $_POST['user-submitted-category[]'],
+			'post_image'=>  $_POST['thumbnail'],
+			'post_content' =>  $_POST['user-submitted-content'],
+			'post_tag'=>  $_POST['user-submitted-tags[]'],
+			'post_author' =>  $_POST['user-submitted-name'],
+			'post_status' => 'publish', 
+			
+	];
+	$post_id = wp_update_post($my_post);
+	print_r ('New Post Saved !');
+}
+return apply_filters('modif',$post_id);
+}
 
 
 function usp_include_deps() {
@@ -1568,3 +1610,4 @@ function usp_clear_cookies() {
 	
 }
 add_action('wp_logout', 'usp_clear_cookies');
+

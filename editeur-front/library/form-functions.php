@@ -122,8 +122,10 @@ function usp_get_tag_options() {
 		$name = isset($tag->name) ? $tag->name : '';
 		$slug = isset($tag->slug) ? $tag->slug : '';
 		
-		$output .= '<option value="'. esc_attr($slug) .'">'. esc_html($name) .'</option>';
-		
+		$output .= '<li>
+		<input name="user-submitted-tags[]"  type="checkbox" id="'.esc_html($name).'" 
+		value="'.esc_attr($slug).'"></input>
+		<label style="font-size: 20px; margin-left:15%; margin-top:-5%;"> '.esc_html($name).'</label> ';
 	}
 	
 	return $output;
@@ -149,25 +151,31 @@ function usp_get_cat_options() {
 		
 		if (isset($usp_options['multiple-cats']) && $usp_options['multiple-cats']) {
 			
-			    if ($cat_level == 'parent')                 $class = 'usp-cat-parent';
+			if ($cat_level == 'parent')                 $class = 'usp-cat-parent';
 			elseif ($cat_level == 'child')                  $class = 'usp-cat-child';
 			elseif ($cat_level == 'grandchild')             $class = 'usp-cat-grand';
 			elseif ($cat_level == 'great_grandchild')       $class = 'usp-cat-great';
 			elseif ($cat_level == 'great_great_grandchild') $class = 'usp-cat-great-great';
 			else                                            $class = 'usp-cat';
-			
-			$output .= '<option value="'. esc_attr($cat_id) .'" class="'. $class .'">'. esc_html(get_cat_name($cat_id)) .'</option>';
+			$catn=get_cat_name($cat_id);
+			$output .= '<li>
+			<input  name="user-submitted-category[]" type="checkbox" id="'.$catn.'"class="'. $class .'" value="'.$cat_id.'"></input>
+			<label  style="font-size: 20px; margin-left:20%; margin-top:-10%" >'.$catn.'</label>
+			</li>';
 			
 		} else {
 			
-			    if ($cat_level == 'parent')                 $indent = '';
+			if ($cat_level == 'parent')                 $indent = '';
 			elseif ($cat_level == 'child')                  $indent = '&emsp;';
 			elseif ($cat_level == 'grandchild')             $indent = '&emsp;&emsp;';
 			elseif ($cat_level == 'great_grandchild')       $indent = '&emsp;&emsp;&emsp;';
 			elseif ($cat_level == 'great_great_grandchild') $indent = '&emsp;&emsp;&emsp;&emsp;';
-			
-			$output .= '<option value="'. esc_attr($cat_id) .'">'. $indent . esc_html(get_cat_name($cat_id)) .'</option>';
-			
+			$catn=get_cat_name($cat_id);
+
+			$output .= '<li>
+			<input  name="user-submitted-category[]" type="checkbox" id="'.$catn.'"class="'. $class .'" value="'.$cat_id.'"></input>
+			<label  style="font-size: 20px;margin-left:20%; margin-top:-10%" >'.$catn.'</label>
+			</li>';
 		}
 		
 	}
@@ -278,3 +286,4 @@ function usp_get_categories() {
 	return $usp_cats;
 	
 }
+
