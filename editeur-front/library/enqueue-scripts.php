@@ -34,6 +34,7 @@ function usp_enqueueResources() {
 	
 	$display_js  = false;
 	$display_css = false;
+	//injection des JS dans mon plugin
 	wp_enqueue_script('delete', $plugin_url .'/resources/delete.js', array(), 1,'all');
 	wp_enqueue_script('front-end', $plugin_url .'/resources/front-end.js', array(), 1,'all');
 	wp_enqueue_script('update', $plugin_url .'/resources/update.js', array(), 1,'all');
@@ -65,7 +66,7 @@ function usp_enqueueResources() {
 		if ($form_type !== 'disable') $display_css = true;
 		
 	}
-	
+	//injection du css
 	if ($display_css) {
 		
 		wp_enqueue_style('usp_style', $usp_css, array(), USP_VERSION, 'all');
@@ -76,13 +77,6 @@ function usp_enqueueResources() {
 		
 		$deps = array();
 		
-		if ($recaptcha === 'show') {
-			
-			usp_enqueue_recaptcha();
-			
-			array_push($deps, 'usp_recaptcha');
-			
-		}
 		
 		if ($multi_cats || $existing_tags) {
 			
@@ -107,28 +101,6 @@ function usp_enqueueResources() {
 }
 add_action('wp_enqueue_scripts', 'usp_enqueueResources');
 
-function usp_enqueue_recaptcha() {
-	
-	global $usp_options;
-	
-	if (isset($usp_options['usp_recaptcha']) && ($usp_options['usp_recaptcha'] == 'show')) {
-		
-		$recaptcha = isset($usp_options['recaptcha_public'])  ? $usp_options['recaptcha_public']  : '';
-		$version   = isset($usp_options['recaptcha_version']) ? $usp_options['recaptcha_version'] : 2;
-		
-		if ($version == 3) {
-			
-			wp_enqueue_script('usp_recaptcha', 'https://www.google.com/recaptcha/api.js?render='. $recaptcha, array(), null);
-			
-		} else {
-			
-			wp_enqueue_script('usp_recaptcha', 'https://www.google.com/recaptcha/api.js', array(), USP_VERSION);
-			
-		}
-		
-	}
-	
-}
 
 // WP >= 4.5
 function usp_inline_script() {

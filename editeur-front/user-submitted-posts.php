@@ -1171,6 +1171,7 @@ function usp_createPublicSubmission($title, $files, $ip, $author, $url, $email, 
 			
 			update_post_meta($post_id, 'is_submission', true);
 			update_post_meta($post_id, 'usp-post-id', $post_id);
+			//fonction ajout d image mise en avant 
 	if (!function_exists('wp_generate_attachment_metadata')){
 						require_once(ABSPATH . "wp-admin" . '/includes/image.php');
 						require_once(ABSPATH . "wp-admin" . '/includes/file.php');
@@ -1188,7 +1189,7 @@ function usp_createPublicSubmission($title, $files, $ip, $author, $url, $email, 
 						//and if you want to set that image as Post  then use:
 						update_post_meta($post_id,'_thumbnail_id',$attach_id);
 					}
-			
+			//
 			$custom_name   = isset($usp_options['custom_name'])          ? $usp_options['custom_name']          : 'usp_custom_field';
 			$checkbox_name = isset($usp_options['custom_checkbox_name']) ? $usp_options['custom_checkbox_name'] : 'usp_custom_checkbox';
 			
@@ -1455,24 +1456,12 @@ function usp_error_message() {
 		
 		foreach ($error_array as $e) {
 			
-			if     ($e == 'required-login')      $error[] = esc_html__('User login required', 'usp');
-			elseif ($e == 'required-name')       $error[] = esc_html__('User name required', 'usp');
+			if      ($e == 'required-name')       $error[] = esc_html__('User name required', 'usp');
 			elseif ($e == 'required-title')      $error[] = esc_html__('Post title required', 'usp');
-			elseif ($e == 'required-url')        $error[] = esc_html__('User URL required', 'usp');
+			
 			elseif ($e == 'required-tags')       $error[] = esc_html__('Post tags required', 'usp');
 			elseif ($e == 'required-category')   $error[] = esc_html__('Post category required', 'usp');
 			elseif ($e == 'required-content')    $error[] = esc_html__('Post content required', 'usp');
-			elseif ($e == 'required-recaptcha')  $error[] = esc_html__('Correct captcha required', 'usp');
-			elseif ($e == 'required-captcha')    $error[] = esc_html__('Correct captcha required', 'usp');
-			elseif ($e == 'required-email')      $error[] = esc_html__('User email required', 'usp');
-			elseif ($e == 'incorrect-email')     $error[] = esc_html__('Please check your email and try again', 'usp');
-			elseif ($e == 'spam-verify')         $error[] = esc_html__('Non-empty value for hidden field', 'usp');
-			elseif ($e == 'file-min')            $error[] = esc_html__('Minimum number of images not met', 'usp') . $min;
-			elseif ($e == 'file-max')            $error[] = esc_html__('Maximum number of images exceeded ', 'usp') . $max;
-			elseif ($e == 'width-min')           $error[] = esc_html__('Minimum image width not met', 'usp') . $min_width;
-			elseif ($e == 'width-max')           $error[] = esc_html__('Image width exceeds maximum', 'usp') . $max_width;
-			elseif ($e == 'height-min')          $error[] = esc_html__('Minimum image height not met', 'usp') . $min_height;
-			elseif ($e == 'height-max')          $error[] = esc_html__('Image height exceeds maximum', 'usp') . $max_height;
 			elseif ($e == 'file-type')           $error[] = esc_html__('File type not allowed (please upload images only)', 'usp');
 			elseif ($e == 'required-custom')     $error[] = esc_html($custom_label) . esc_html__(' required', 'usp');
 			elseif ($e == 'required-checkbox')   $error[] = esc_html($checkbox_label);

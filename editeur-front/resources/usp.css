@@ -3,7 +3,9 @@
 	@ https://perishablepress.com/user-submitted-posts/
 	Complete list of CSS selectors @ https://m0n.co/e
 */
-
+.parsley-required{
+	display:none;
+}
 div#user-submitted-posts { width: 100%;  overflow: hidden;  }
 div#user-submitted-posts form { box-sizing: border-box; margin: 10px 0; padding: 5px; }
 div#user-submitted-posts fieldset { box-sizing: border-box; margin: 10px 0; padding: 0; border: 0; }

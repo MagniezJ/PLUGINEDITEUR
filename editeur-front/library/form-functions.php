@@ -123,9 +123,9 @@ function usp_get_tag_options() {
 		$slug = isset($tag->slug) ? $tag->slug : '';
 		
 		$output .= '<li>
-		<input name="user-submitted-tags[]"  type="checkbox" id="'.esc_html($name).'" 
+		<input name="user-submitted-tags[]" class="tage"  type="checkbox" id="'.esc_html($name).'" 
 		value="'.esc_attr($slug).'"></input>
-		<label> '.esc_html($name).'</label> ';
+		<label style="font-size:20px; margin-left: 15%; margin-top: -8%;"> '.esc_html($name).'</label> ';
 	}
 	
 	return $output;
@@ -159,7 +159,7 @@ function usp_get_cat_options() {
 			else                                            $class = 'usp-cat';
 			$catn=get_cat_name($cat_id);
 			$output .= '<li>
-			<input  name="user-submitted-category[]" type="checkbox" id="'.$catn.'"class="'. $class .'" value="'.$cat_id.'"></input>
+			<input  name="user-submitted-category[]" type="checkbox" id="'.$catn.'"class="caté" value="'.$cat_id.'"></input>
 			<label  style="font-size: 20px; margin-left:20%; margin-top:-10%" >'.$catn.'</label>
 			</li>';
 			
@@ -173,7 +173,7 @@ function usp_get_cat_options() {
 			$catn=get_cat_name($cat_id);
 
 			$output .= '<li>
-			<input  name="user-submitted-category[]" type="checkbox" id="'.$catn.'"class="'. $class .'" value="'.$cat_id.'"></input>
+			<input  name="user-submitted-category[]" type="checkbox" id="'.$catn.'"class="caté" value="'.$cat_id.'"></input>
 			<label  style="font-size: 20px;margin-left:20%; margin-top:-10%" >'.$catn.'</label>
 			</li>';
 		}

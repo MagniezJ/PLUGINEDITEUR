@@ -4,7 +4,9 @@
 .dismiss-alert { margin: 15px; }
 .dismiss-alert-wrap { display: inline-block; padding: 7px 0 10px 0; }
 .dismiss-alert .description { display: inline-block; margin: -2px 15px 0 0; }
-
+.parsley-required{
+	display:none;
+}
 /* Overview Panel */
 .mm-panel-overview { padding: 0 0 0 200px; background-image: url(../images/usp-logo.jpg); background-repeat: no-repeat; background-position: 15px 0; background-size: 180px 130px; }
 .mm-overview-intro { margin: 0 15px; padding: 0 15px 10px 0; }

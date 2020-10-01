@@ -19,9 +19,10 @@ else :
 
 	<form id="usp_form" method="post" enctype="multipart/form-data" action="">
 		<div id="usp-error-message" class="usp-callout-failure usp-hidden">
-			<?php esc_html_e('Please complete the required fields.', 'usp'); ?></div>
-		<?php echo usp_error_message();
-		
+		<!-- changement du message d erreur -->	
+		<?php esc_html_e('Entrer les champs requis: Titre, Contenu, Nom, Image mise en avant', 'usp'); ?></div>
+		<?php echo usp_error_message(); ?>
+		<?php
 		if (isset($_GET['success']) && $_GET['success'] == '1') :
 			echo '<div id="usp-success-message">'. $usp_options['success-message'] .'</div>';
 		else :
@@ -31,7 +32,10 @@ else :
 		<fieldset class="usp-name" style="width:30%; margin-left:10%; margin-top:2%; margin-bottom:0%">
 			<label for="user-submitted-name" style="display:none;"><?php esc_html_e('Your Name', 'usp'); ?></label>
 			<input id="user-submitted-name" name="user-submitted-name" type="text" value=""
-				style="width:30%; position:absolute; top:20%;left:20%;"
+				style="    width: 20%;
+    position: absolute;
+    top: 4%;
+    left: 60%;"
 				placeholder="<?php esc_attr_e('Your Name', 'usp'); ?>"
 				<?php if (usp_check_required('usp_name')) echo $usp_required; ?> class="usp-input">
 		</fieldset>
@@ -57,7 +61,8 @@ else :
 			<label for="user-submitted-title"
 				style="font-size:36px; margin-top: 2%; margin-bottom:5%; margin-left:10%;"><?php esc_html_e('Ajouter un article', 'usp'); ?></label>
 			<input id="user-submitted-title" name="user-submitted-title" type="text" value=""
-				style="width: 70%; margin-left:15%" placeholder="<?php esc_attr_e('Post Title', 'usp'); ?>"
+				style="width: 60%;
+    margin-left: 19%;" placeholder="<?php esc_attr_e('Post Title', 'usp'); ?>"
 				<?php if (usp_check_required('usp_title')) echo $usp_required; ?> class="usp-input">
 		</fieldset>
 		<?php } if ($usp_options['usp_tags'] == 'show' || $usp_options['usp_tags'] == 'optn') { ?>
@@ -128,25 +133,42 @@ else :
 
 				<?php if ($usp_existing_tags) { ?>
 
-				<fieldset class="usp-tags" style="width:18% ; position:absolute; top:70%; left:60%;">
+				<fieldset class="usp-tags" >
+					<label style=" position: absolute;
+    top: 57%;
+    left: 60%;"> Etiquettes</label>
 					<ul id="user-submitted-tags" name="user-submitted-tags[]"
 						<?php if (usp_check_required('usp_tags')) echo $usp_required; ?>
 						 class="usp-select usp-multiple"
-						multiple="multiple" 
-						style="width:20%; position:absolute; top:50%; left:63%;">
+						multiple="multiple" style="    position: absolute;
+    top: 62%;
+    left: 60%;
+    width: 30%; list-style-type: none;
+}"
+						>
 						
 						<?php echo usp_get_tag_options(); ?>
 					</ul>
 				</fieldset>
 				<?php } else { ?>
 
-					<fieldset class="usp-tags" style="width:40% ; position:absolute; top:70%; left:60%;">
-					<select id="user-submitted-tags" name="user-submitted-tags[]"
-						<?php if (usp_check_required('usp_tags')) echo $usp_required; ?> class="usp-select usp-multiple"
-						multiple="multiple" style="width:20%; position:absolute; top:50%; left:63%;">
-						<option value=""><?php esc_attr_e('étiquettes', 'usp'); ?></option>
+					<fieldset class="usp-tags" >
+						<label style=" position: absolute;
+    top: 57%;
+    left: 60%;"> Etiquettes</label>
+					<ul id="user-submitted-tags" name="user-submitted-tags[]"
+						<?php if (usp_check_required('usp_tags')) echo $usp_required; ?>
+						 class="usp-select usp-multiple"
+						multiple="multiple" 
+						style="    position: absolute;
+    top: 61%;
+    left: 60%;
+    width: 30%; list-style-type: none;
+}"
+						>
+						
 						<?php echo usp_get_tag_options(); ?>
-					</select>
+					</ul>
 				<?php } ?>
 			</fieldset>
 			<?php } if ($usp_recaptcha_public && $usp_recaptcha_private && $usp_recaptcha_display == 'show' && $usp_recaptcha_version == 2) { ?>
@@ -164,6 +186,7 @@ else :
 					<input type="file" 
 					class="form-control" id="thumbnail" 
 					name="thumbnail" accept="image/png, image/jpeg, image/jpg, image/svg">
+					<?php if (usp_check_required('usp_images')) echo $usp_required; ?>
 					<div class="image-preview" id="imagePreview" 
 					style="width: 300px; min-height:100px;border: 2px solid white;
 					 margin-top: 15px; display:flex; align-items:center; 
@@ -187,7 +210,9 @@ else :
 
 			<?php echo usp_display_custom_checkbox(); ?>
 
-			<div id="usp-submit" style="position:absolute; top:70%; left:63%;">
+			<div id="usp-submit" style="position: absolute;
+    top: 93%;
+    left: 15%;">
 				<?php if (isset($usp_options['redirect-url']) && !empty($usp_options['redirect-url'])) { ?>
 
 				<input type="hidden" class="usp-hidden" name="redirect-override"
