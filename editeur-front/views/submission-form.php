@@ -128,28 +128,25 @@ else :
 
 				<?php if ($usp_existing_tags) { ?>
 
-				<fieldset class="usp-tags" style="width:40% ; margin-top: 20%;margin-left: 80%">
+				<fieldset class="usp-tags" style="width:18% ; position:absolute; top:70%; left:60%;">
 					<ul id="user-submitted-tags" name="user-submitted-tags[]"
 						<?php if (usp_check_required('usp_tags')) echo $usp_required; ?>
 						 class="usp-select usp-multiple"
 						multiple="multiple" 
-						>
+						style="width:20%; position:absolute; top:50%; left:63%;">
 						
 						<?php echo usp_get_tag_options(); ?>
 					</ul>
 				</fieldset>
 				<?php } else { ?>
 
-					<fieldset class="usp-tags" style="width:40% ; position:absolute; top:60%; left: 60%">
-						<label for="user-submitted-tags">Etiquettes</label>
-					<ul id="user-submitted-tags" name="user-submitted-tags[]"
-						<?php if (usp_check_required('usp_tags')) echo $usp_required; ?>
-						 class="usp-select usp-multiple"
-						multiple="multiple" 
-						>
-						
+					<fieldset class="usp-tags" style="width:40% ; position:absolute; top:70%; left:60%;">
+					<select id="user-submitted-tags" name="user-submitted-tags[]"
+						<?php if (usp_check_required('usp_tags')) echo $usp_required; ?> class="usp-select usp-multiple"
+						multiple="multiple" style="width:20%; position:absolute; top:50%; left:63%;">
+						<option value=""><?php esc_attr_e('étiquettes', 'usp'); ?></option>
 						<?php echo usp_get_tag_options(); ?>
-					</ul>
+					</select>
 				<?php } ?>
 			</fieldset>
 			<?php } if ($usp_recaptcha_public && $usp_recaptcha_private && $usp_recaptcha_display == 'show' && $usp_recaptcha_version == 2) { ?>
@@ -190,7 +187,7 @@ else :
 
 			<?php echo usp_display_custom_checkbox(); ?>
 
-			<div id="usp-submit" style="position:absolute; top:90%; left:43%;">
+			<div id="usp-submit" style="position:absolute; top:70%; left:63%;">
 				<?php if (isset($usp_options['redirect-url']) && !empty($usp_options['redirect-url'])) { ?>
 
 				<input type="hidden" class="usp-hidden" name="redirect-override"

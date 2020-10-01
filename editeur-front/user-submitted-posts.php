@@ -40,6 +40,8 @@ function usp_i18n_init() {
 add_action('plugins_loaded', 'usp_i18n_init');
 
 
+	
+	
 
 function usp_require_wp_version() {
 	
@@ -104,13 +106,7 @@ function usp_check_required($field) {
 	
 }
 
-add_action( 'parse_request', 'wpse132196_redirect_after_trashing_get' );
-function wpse132196_redirect_after_trashing_get() {
-    if ( array_key_exists( 'trashed', $_GET ) && $_GET['trashed'] == '1' ) {
-        wp_redirect( home_url('/liste-articles') );
-        exit;
-    }
-}
+
 
 function usp_get_default_title() {
 	
@@ -274,7 +270,8 @@ function usp_checkForPublicSubmission() {
 	
 	global $usp_options;
 	
-	$is_submitted = (isset($_POST['usp-nonce']) && wp_verify_nonce($_POST['usp-nonce'], 'usp-nonce')) ? true : false;
+	$is_submitted = (isset($_POST['usp-nonce']) && 
+	wp_verify_nonce($_POST['usp-nonce'], 'usp-nonce')) ? true : false;
 	
 	if ($is_submitted) {
 		
@@ -299,7 +296,8 @@ function usp_checkForPublicSubmission() {
 		$verify   = isset($_POST['user-submitted-verify'])   ? sanitize_text_field($_POST['user-submitted-verify'])   : '';
 		$content  = isset($_POST['user-submitted-content'])  ? usp_sanitize_content($_POST['user-submitted-content']) : '';
 		
-		$result = usp_createPublicSubmission($title, $files, $ip, $author, $url, $email, $tags, $captcha, $verify, $content, $category, $custom, $checkbox);
+		$result = 
+		usp_createPublicSubmission($title, $files, $ip, $author, $url, $email, $tags, $captcha, $verify, $content, $category, $custom, $checkbox);
 		
 		$post_id = false; 
 		
@@ -1074,7 +1072,13 @@ function usp_attach_images($post_id, $newPost, $files, $file_count) {
 	
 }
 
-
+add_action( 'parse_request', 'wpse132196_redirect_after_trashing_get' );
+function wpse132196_redirect_after_trashing_get() {
+    if ( array_key_exists( 'trashed', $_GET ) && $_GET['trashed'] == '1' ) {
+        wp_redirect( home_url('/liste') );
+        exit;
+    }
+}
 
 function usp_createPublicSubmission($title, $files, $ip, $author, $url, $email, $tags, $captcha, $verify, $content, $category, $custom, $checkbox) {
 	
@@ -1213,28 +1217,6 @@ function usp_createPublicSubmission($title, $files, $ip, $author, $url, $email, 
 }
 
 
-function modif() {
-	global $current_post;
-	
-if(isset($_POST['modif'])){	
-	// create post object
-	$my_post = [
-			'ID' => $current_post,
-			'post_type' => 'post',
-			'post_title' => $_POST['user-submitted-title'],
-			'post_category' =>  $_POST['user-submitted-category[]'],
-			'post_image'=>  $_POST['thumbnail'],
-			'post_content' =>  $_POST['user-submitted-content'],
-			'post_tag'=>  $_POST['user-submitted-tags[]'],
-			'post_author' =>  $_POST['user-submitted-name'],
-			'post_status' => 'publish', 
-			
-	];
-	$post_id = wp_update_post($my_post);
-	print_r ('New Post Saved !');
-}
-return apply_filters('modif',$post_id);
-}
 
 
 function usp_include_deps() {

@@ -125,7 +125,7 @@ function usp_get_tag_options() {
 		$output .= '<li>
 		<input name="user-submitted-tags[]"  type="checkbox" id="'.esc_html($name).'" 
 		value="'.esc_attr($slug).'"></input>
-		<label style="font-size: 20px; margin-left:15%; margin-top:-5%;"> '.esc_html($name).'</label> ';
+		<label> '.esc_html($name).'</label> ';
 	}
 	
 	return $output;

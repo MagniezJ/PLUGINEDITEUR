@@ -76,7 +76,7 @@ function usp_display_posts($attr, $content = null) {
 	$display_posts = '<div id="fom" style="display:none;">
 	'.do_shortcode("[modification]") .'
 	</div>
-	<table id="tb" cellpadding="0" cellspacing="0" border="0" >
+	<table id="tb" cellpadding="0" cellspacing="0" border="0" style="margin-left:3%;">
     <thead >
         <tr style="background-color:#1E73BE; color:white;">
             <th>Titre</th>
@@ -88,50 +88,49 @@ function usp_display_posts($attr, $content = null) {
 		    <th>Edition</th>
         </tr>
     </thead> ';
-	
+	$i=0;
 	foreach ($submitted_posts as $post) {
+		
 		$posttags=get_the_tags();
 	    setup_postdata($post);
 		foreach((get_the_category()) as $cat) { 
 			$cato=$cat->cat_name;
 		};
-		$id="ID".get_the_id();
+		$id="ID".get_the_ID();
 		if ($posttags) {
 			foreach($posttags as $tag) {
 			$tage=$tag->name . ' '; 
 			}}
-		
-		$idp = get_the_ID();
-		$content_post = get_post($idp);
-$content = $content_post->post_content;
-$content = apply_filters('the_content', $content);
-$content = str_replace(']]>', ']]&gt;', $content);
-
-			$display_posts .= '
-			<tbody>
-			<tr>
-				<input type=hidden id="post" value=<?php  $id; ?>
-				<input type=hidden id="postdeux" value=<?php  $submitted_posts; ?> 
-				<td><p id="title">'.get_the_title() .'</p> </td>
-				<td><p id="aut">'.get_the_author().'</p></td>
-				<td> '.get_the_date(). '</td>
-				<td><p id="cat"> '. $cato.'</p></td>
-				<td> '. get_comments_number(). ' </td>
-				<td>'. get_post_status().'</td>
-				<td><a href="#" class="mod">modifier</a> </br>
-				<a onclick="return confirm(\'Etes vous sur de vouloir supprimer le post : '. get_the_title().'?\')"  href="'.get_delete_post_link(get_the_ID()).'" data-id="'. the_ID() .'?>" data-nonce="'. wp_create_nonce('ajax_delete_post_nonce') .'" class="delete-post"
-				style="text-decoration:none; color:red; font-weight:bolder; border: 2px solid red;">
-				delete</>
-				</td>
-				<td style="display:none;"><p id="img" style="display:none;">'.get_the_post_thumbnail().'</p></td>
-				<td style="display:none;"><p id="content" style="display:none;">'.$content.'</p></td>
-			</tr>
-			</br>';
 			$idp = get_the_ID();
 			__set($id,$idp);
+			$display_posts .= '
+			<tbody>
+			<tr class="article">
+				<input type=hidden class="post" id="'.$id.'" value="'.$id.'"> </input>
+				<input type=hidden id="postdeux" value=<?php  $submitted_posts; ?> 
+				<input   type=hidden id="Modifid" value="'.$i.'"> </input>
+				<td><a href="'.get_post_permalink().'" id="title'.$i.'">'.get_the_title() .'</a> </td>
+				<td><p id="aut'.$i.'">'.get_the_author().'</p></td>
+				<td> '.get_the_date(). '</td>
+				<td><p id="cat'.$i.'"> '. $cato.'</p></td>
+				<td> '. get_comments_number(). ' </td>
+				<td>'. get_post_status().'</td>
+				<td><button  id="'.$i.'" class="mod">modifier</button> </br>
+				<a onclick="return confirm(\'Are you sure you wish to delete post:'
+				. get_the_title().'?\')"  href="'.get_delete_post_link(get_the_ID()).'"
+				 data-id="'. the_ID() .'?>" data-nonce="
+				 '. wp_create_nonce('ajax_delete_post_nonce') .'" 
+				 class="delete-post">delete</>
+				</td>
+				<td style="display:none;"><p id="img'.$i.'" style="display:none;">'.get_the_post_thumbnail().'</p></td>
+				<td style="display:none;"><p id="content'.$i.'" style="display:none;">'.get_the_content().'</p></td>
+			</tr>
+			</br>';
+			
 			$catp="author";
 			$aut=get_the_author();
 			__set($catp,$aut);
+			$i=$i+1;
 		}
 		$display_posts .= '</tbody></table>';
 
@@ -184,13 +183,13 @@ endif;
 
 function modification($args) {
 
-	
+	$id=get_the_ID();
 $show='<div id="user-submitted-posts">
 
 <form id="usp_form" method="post" enctype="multipart/form-data" action="">
 	<fieldset class="usp-name" style="width:30%; margin-left:10%; margin-top:2%; margin-bottom:0%">
-		
-		<input id="user-submitted-name" name="user-submitted-name" type="text" value=""
+	<input type=hidden class="post" id="'.$id.'" value="'.$id.'" name="Idp"> </input>
+		<input id="name" name="user-submitted-name" type="text" value=""
 			style="width:30%; position:absolute; top:20%;left:20%;"
 			placeholder="prenom"
 			
@@ -199,11 +198,11 @@ $show='<div id="user-submitted-posts">
 			<label for="user-submitted-title"
 				style="font-size:36px; margin-top: 2%; margin-bottom:5%; 
 				margin-left:10%;">Ajouter un titre</label>
-			<input id="user-submitted-title" name="user-submitted-title" 
-			type="text" value="" style="width: 70%; margin-left:15%" placeholder="Ajouter un titre"
+			<input id="titre" name="user-submitted-title" 
+			type="text" value="" style="width: 70%; margin-left:15%; font-size:20px;" placeholder="Ajouter un titre">
 	</fieldset>
 		<textarea style="height:20%; margin-top:8%;
-		width:100%" id="user-submitted-content"
+		width:100%" id="hello"
 		name="user-submitted-content" rows="20" placeholder="Poster un article">
 		</textarea>
 		<fieldset class="usp-category" style="font-size: 20px; position:absolute; left:60%; top:10%">
@@ -237,12 +236,15 @@ $show='<div id="user-submitted-posts">
 				</div>
 
 			</fieldset>
-			<input type="hidden" name="submitted" id="submitted" value="true" />
-			<button type="submit" name="modif">Modifier</button>
+			
+			<input type="button" 
+				class="usp-submit" id="update-post" name="modif"
+					value="modifier">
+					'.wp_nonce_field( 'post_nonce', 'post_nonce_field' ).';
 			</form>
 			</div>
 					';
-					wp_nonce_field( 'post_nonce', 'post_nonce_field' );
+				
 					
 	return $show;
 };

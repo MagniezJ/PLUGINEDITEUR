@@ -7,13 +7,11 @@ inp.addEventListener('change',()=>{
     const file=document.getElementById('thumbnail').files[0];
     if (file){
         const reader=new FileReader();
-console.log(reader);
         text.style.display="none";
         imgp.style.display="block";
         
         reader.addEventListener('load',()=>{ 
             imgp.setAttribute("src",reader.result);
-            console.log(reader.result)
         });
         reader.readAsDataURL(file);
     }
